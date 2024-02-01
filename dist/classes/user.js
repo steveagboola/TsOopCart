@@ -1,71 +1,58 @@
-import { v4 as uuidv4 } from 'uuid';
-import { Item } from './item';
-
-export class User {
-    private id: string;
-    private name: string;
-    private age: number;
-    private cart: Item[];
-
-    constructor(name: string, age: number) {
-        this.id = uuidv4();
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.User = void 0;
+const uuid_1 = require("uuid");
+class User {
+    constructor(name, age) {
+        this.id = (0, uuid_1.v4)();
         this.name = name;
         this.age = age;
         this.cart = [];
     }
-
     // Getters and Setters
-    get getId(): string {
+    get getId() {
         return this.id;
     }
-
-    get getName(): string {
+    get getName() {
         return this.name;
     }
-
-    set setName(name: string) {
+    set setName(name) {
         this.name = name;
     }
-
-    get getAge(): number {
+    get getAge() {
         return this.age;
     }
-
-    set setAge(age: number) {
+    set setAge(age) {
         this.age = age;
     }
-
-    get getCart(): Item[] {
+    get getCart() {
         return this.cart;
     }
-
     // Methods
-    addToCart(item: Item): void {
+    addToCart(item) {
         this.cart.push(item);
     }
-
-    removeFromCart(item: Item): void {
+    removeFromCart(item) {
         this.cart = this.cart.filter(cartItem => cartItem.getId !== item.getId);
     }
-
-    removeQuantityFromCart(item: Item, quantity: number): void {
+    removeQuantityFromCart(item, quantity) {
         const filteredCart = [];
         let count = quantity;
         for (let cartItem of this.cart) {
             if (cartItem.getId !== item.getId || count === 0) {
                 filteredCart.push(cartItem);
-            } else {
+            }
+            else {
                 count--;
             }
         }
         this.cart = filteredCart;
     }
-
-    cartTotal(): number {
+    cartTotal() {
         return this.cart.reduce((total, item) => total + item.getPrice, 0);
     }
-
-    printCart(): void {
+    printCart() {
         console.log(this.cart.map(item => `${item.getName}: ${item.getPrice}`).join(', '));
     }
 }
+exports.User = User;
